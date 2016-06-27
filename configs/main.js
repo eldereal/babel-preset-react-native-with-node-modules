@@ -37,6 +37,9 @@ module.exports = {
     'transform-react-display-name',
     'transform-react-jsx',
     'transform-regenerator',
+    ['module-map', {
+        'crypto': 'crypto-browserify'
+    }],
     ['transform-es2015-for-of', { loose: true }],
     require('../transforms/transform-symbol-member'),
   ]),
