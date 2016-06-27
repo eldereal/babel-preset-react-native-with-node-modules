@@ -30,7 +30,7 @@
     "babel-plugin-transform-react-jsx-source": "^6.5.0",
     "babel-plugin-transform-regenerator": "^6.5.0",
     "react-transform-hmr": "^1.0.4",
-    "crypto-browserify": "^3.11.0",
+    "crypto-browserify": "^3.11.0"
   },
   "description": "Babel preset for React Native applications",
   "devDependencies": {},
