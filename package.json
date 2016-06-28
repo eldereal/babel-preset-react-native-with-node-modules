@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "babel-plugin-check-es2015-constants": "^6.5.0",
-    "babel-plugin-module-map": "^1.0.1",
+    "babel-plugin-module-alias": "^1.5.0",
     "babel-plugin-react-transform": "2.0.2",
     "babel-plugin-syntax-async-functions": "^6.5.0",
     "babel-plugin-syntax-class-properties": "^6.5.0",
@@ -29,8 +29,12 @@
     "babel-plugin-transform-react-jsx": "^6.5.0",
     "babel-plugin-transform-react-jsx-source": "^6.5.0",
     "babel-plugin-transform-regenerator": "^6.5.0",
-    "react-transform-hmr": "^1.0.4",
-    "crypto-browserify": "^3.11.0"
+    "react-transform-hmr": "^1.0.4"
+  },
+  "peerDepedencies": {
+      "stream-browserify": "^2.0.1",
+      "crypto-browserify": "^3.11.0",
+      "vm-browserify": "^0.0.4"
   },
   "description": "Babel preset for React Native applications",
   "devDependencies": {},
