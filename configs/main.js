@@ -37,6 +37,11 @@ module.exports = {
     'transform-react-display-name',
     'transform-react-jsx',
     'transform-regenerator',
+    ['module-alias', [
+        { src: 'npm:crypto-browserify', expose: 'crypto' },
+        { src: 'npm:stream-browserify', expose: 'stream' },
+        { src: 'npm:vm-browserify', expose: 'vm' },
+    ]],
     ['transform-es2015-for-of', { loose: true }],
     require('../transforms/transform-symbol-member'),
     require('../transforms/transform-node-globals'),

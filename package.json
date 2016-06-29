@@ -34,6 +34,11 @@
     "babel-plugin-transform-regenerator": "^6.5.0",
     "react-transform-hmr": "^1.0.4"
   },
+  "peerDepedencies": {
+      "stream-browserify": "^2.0.1",
+      "crypto-browserify": "^3.11.0",
+      "vm-browserify": "^0.0.4"
+  },
   "description": "Babel preset for React Native applications",
   "homepage": "https://github.com/eldereal/babel-preset-react-native-with-node-modules#readme",
   "keywords": [
