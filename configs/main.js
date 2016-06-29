@@ -39,6 +39,12 @@ module.exports = {
     'transform-regenerator',
     ['transform-es2015-for-of', { loose: true }],
     require('../transforms/transform-symbol-member'),
+    require('../transforms/transform-node-globals'),
+    ['module-alias', [
+        { src: 'npm:crypto-browserify', expose: 'crypto' },
+        { src: 'npm:stream-browserify', expose: 'stream' },
+        { src: 'npm:vm-browserify', expose: 'vm' }
+    ]]
   ]),
   env: {
     development: {

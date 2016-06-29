@@ -1,47 +1,10 @@
 {
-  "_args": [
-    [
-      "babel-preset-react-native@^1.7.0",
-      "/Users/elm/huati/fit-lesson-client/node_modules/react-native"
-    ]
-  ],
-  "_from": "babel-preset-react-native@>=1.7.0 <2.0.0",
-  "_id": "babel-preset-react-native@1.9.0",
-  "_inCache": true,
-  "_installable": true,
-  "_location": "/babel-preset-react-native",
-  "_nodeVersion": "4.2.4",
-  "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/babel-preset-react-native-1.9.0.tgz_1464279179016_0.09663863433524966"
-  },
-  "_npmUser": {
-    "email": "bestander@gmail.com",
-    "name": "bestander"
-  },
-  "_npmVersion": "2.14.12",
-  "_phantomChildren": {},
-  "_requested": {
-    "name": "babel-preset-react-native",
-    "raw": "babel-preset-react-native@^1.7.0",
-    "rawSpec": "^1.7.0",
-    "scope": null,
-    "spec": ">=1.7.0 <2.0.0",
-    "type": "range"
-  },
-  "_requiredBy": [
-    "/react-native"
-  ],
-  "_resolved": "https://registry.npmjs.org/babel-preset-react-native/-/babel-preset-react-native-1.9.0.tgz",
-  "_shasum": "035fc06c65f4f2a02d0336a100b2da142f36dab1",
-  "_shrinkwrap": null,
-  "_spec": "babel-preset-react-native@^1.7.0",
-  "_where": "/Users/elm/huati/fit-lesson-client/node_modules/react-native",
   "bugs": {
-    "url": "https://github.com/facebook/react-native/issues"
+    "url": "https://github.com/eldereal/babel-preset-react-native-with-node-modules/issues"
   },
   "dependencies": {
     "babel-plugin-check-es2015-constants": "^6.5.0",
+    "babel-plugin-module-alias": "^1.5.0",
     "babel-plugin-react-transform": "2.0.2",
     "babel-plugin-syntax-async-functions": "^6.5.0",
     "babel-plugin-syntax-class-properties": "^6.5.0",
@@ -72,13 +35,7 @@
     "react-transform-hmr": "^1.0.4"
   },
   "description": "Babel preset for React Native applications",
-  "devDependencies": {},
-  "directories": {},
-  "dist": {
-    "shasum": "035fc06c65f4f2a02d0336a100b2da142f36dab1",
-    "tarball": "https://registry.npmjs.org/babel-preset-react-native/-/babel-preset-react-native-1.9.0.tgz"
-  },
-  "homepage": "https://github.com/facebook/react-native/tree/master/babel-preset/README.md",
+  "homepage": "https://github.com/eldereal/babel-preset-react-native-with-node-modules#readme",
   "keywords": [
     "babel",
     "preset",
@@ -88,44 +45,21 @@
   "main": "index.js",
   "maintainers": [
     {
-      "email": "bestander@gmail.com",
-      "name": "bestander"
-    },
-    {
-      "email": "dev@david-aurelio.com",
-      "name": "davidaurelio"
-    },
-    {
-      "email": "exponent.team@gmail.com",
-      "name": "exponent"
-    },
-    {
-      "email": "alex.frantic@gmail.com",
-      "name": "frantic"
-    },
-    {
-      "email": "ide+npm@jameside.com",
-      "name": "ide"
-    },
-    {
-      "email": "martin.bigio@gmail.com",
-      "name": "martinbigio"
-    },
-    {
-      "email": "martin.konicek@gmail.com",
-      "name": "mkonicek"
-    },
-    {
-      "email": "adam@sk3vy.com",
-      "name": "skevy"
+      "email": "eldereal@gmail.com",
+      "name": "eldereal"
     }
   ],
   "name": "babel-preset-react-native",
-  "optionalDependencies": {},
+  "peerDepedencies": {
+    "crypto-browserify": "^3.11.0",
+    "stream-browserify": "^2.0.1",
+    "vm-browserify": "^0.0.4",
+    "process": "^0.11.5"
+  },
   "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebook/react-native/tree/master/babel-preset"
+    "url": "git+https://github.com/eldereal/babel-preset-react-native-with-node-modules.git"
   },
   "scripts": {},
   "version": "1.9.0"
