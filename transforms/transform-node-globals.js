@@ -16,8 +16,26 @@
 
 const babel = require("babel-core");
 
-const UnbindBuffer = Symbol("UnbindBuffer");
-const UnbindProcess = Symbol("UnbindProcess");
+const JSTimerNames = ['setTimeout', 'setInterval', 'setImmediate', 'clearTimeout', 'clearInterval', 'clearImmediate', 'requestAnimationFrame', 'cancelAnimationFrame'];
+
+const replaceConfig = {
+    Buffer: "var _Buffer = typeof Buffer === 'undefined' ? require('buffer/').Buffer : Buffer",
+    SlowBuffer: "var _SlowBuffer = typeof SlowBuffer === 'undefined' ? require('buffer/').SlowBuffer : SlowBuffer",
+    process: "var _process = (function(){" +
+        "    var res = require('process/browser.js');" +
+        "    res.env = res.env || {};" +
+        "    if (!res.env.NODE_ENV) {" +
+        "      res.env.NODE_ENV = (typeof __DEV__ !== 'undefined' && __DEV__) ? 'development' : 'production';" +
+        "    }" +
+        "    console.info('process', res);" +
+        "    return res;" +
+        "})();"
+};
+JSTimerNames.forEach(name => replaceConfig[name] = 'var _timer = typeof ' + name + ' === "undefined" ? require("react-native/Libraries/JavaScriptAppEngine/System/JSTimers/JSTimers").' + name + ' : ' + name + ';');
+const replaceSymbols = {};
+for(const name in replaceConfig){
+    replaceSymbols[name] = Symbol(name);
+}
 
 module.exports = function transformGlobalBuffer(babel) {
     const t = babel.types;
@@ -25,55 +43,31 @@ module.exports = function transformGlobalBuffer(babel) {
     return {
         visitor: {
             ReferencedIdentifier: function(path) {
-                if (path.node.name === "Buffer" && path.node.type === "Identifier" && !path.scope.hasBinding('Buffer')) {
-                    const program = findClosestProgram(path);
-                    const rewriteTable = program.getData(UnbindBuffer) || [];
-                    rewriteTable.push(path);
-                    program.setData(UnbindBuffer, rewriteTable);
-                }
-                else if (path.node.name === "process" && path.node.type === "Identifier" && !path.scope.hasBinding('process')) {
-                    const program = findClosestProgram(path);
-                    const rewriteTable = program.getData(UnbindProcess) || [];
-                    rewriteTable.push(path);
-                    program.setData(UnbindProcess, rewriteTable);
+                for (const name in replaceConfig) {
+                    if (path.node.name === name && path.node.type === "Identifier" && !path.scope.hasBinding(name)) {
+                        const program = findClosestProgram(path);
+                        const rewriteTable = program.getData(replaceSymbols[name]) || [];
+                        rewriteTable.push(path);
+                        program.setData(replaceSymbols[name], rewriteTable);
+                    }
                 }
             },
             Program: {
                 exit: function(program) {
-                    const bufferTable = program.getData(UnbindBuffer);
-                    if (bufferTable) {
-                        let varname = "_Buffer_" + Math.random().toString(36).substr(-4);
-                        while(true){
-                            if(bufferTable.every(path => !path.scope.hasBinding(varname))){
-                                break;
+                    for (const name in replaceConfig) {
+                        const table = program.getData(replaceSymbols[name]);
+                        if (table) {
+                            let varname = "_" + name + "_" + Math.random().toString(36).substr(-4);
+                            while (true) {
+                                if (table.every(path => !path.scope.hasBinding(varname))) {
+                                    break;
+                                }
                             }
+                            table.forEach(path => path.node.name = varname);
+                            const setVar = babel.transform(replaceConfig[name]).ast.program.body[0];
+                            setVar.declarations[0].id.name = varname;
+                            program.node.body.splice(0, 0, setVar);
                         }
-                        bufferTable.forEach(path => path.node.name = varname);
-                        const setBufferVar = babel.transform("var _Buffer = typeof Buffer === 'undefined' ? ((typeof global !== 'undefined' && global && global.Buffer) ? global.Buffer : require('buffer/').Buffer) : Buffer").ast.program.body[0];
-                        setBufferVar.declarations[0].id.name = varname;
-                        program.node.body.splice(0, 0, setBufferVar);
-                    }
-
-                    const processTable = program.getData(UnbindProcess);
-                    if (processTable) {
-                        let varname = "_process_" + Math.random().toString(36).substr(-4);
-                        while(true){
-                            if(processTable.every(path => !path.scope.hasBinding(varname))){
-                                break;
-                            }
-                        }
-                        processTable.forEach(path => path.node.name = varname);
-                        const setProcessVar = babel.transform("var _process = (function(){"+
-                        "    var res = require('process/browser.js');"+
-                        "    res.env = res.env || {};"+
-                        "    if (!res.env.NODE_ENV) {"+
-                        "      res.env.NODE_ENV = (typeof __DEV__ !== 'undefined' && __DEV__) ? 'development' : 'production';"+
-                        "    }"+
-                        "    console.info('process', res);"+
-                        "    return res;"+
-                        "})();").ast.program.body[0];
-                        setProcessVar.declarations[0].id.name = varname;
-                        program.node.body.splice(0, 0, setProcessVar);
                     }
                 }
             }
