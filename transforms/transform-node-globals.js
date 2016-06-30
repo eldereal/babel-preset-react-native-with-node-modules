@@ -27,7 +27,6 @@ const replaceConfig = {
         "    if (!res.env.NODE_ENV) {" +
         "      res.env.NODE_ENV = (typeof __DEV__ !== 'undefined' && __DEV__) ? 'development' : 'production';" +
         "    }" +
-        "    console.info('process', res);" +
         "    return res;" +
         "})();"
 };
