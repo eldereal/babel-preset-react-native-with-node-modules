@@ -22,7 +22,14 @@ const replaceConfig = {
     Buffer: "var _Buffer = typeof Buffer === 'undefined' ? require('buffer/').Buffer : Buffer",
     SlowBuffer: "var _SlowBuffer = typeof SlowBuffer === 'undefined' ? require('buffer/').SlowBuffer : SlowBuffer",
     process: "var _process = (function(){" +
-        "    var res = require('process/browser.js');" +
+        "    var res = typeof process === 'undefined' ? require('process/browser.js') : process;" +
+        "    if (!res.title) {" +
+        "        var polyfill = require('process/browser.js');" +
+        "        for (var key in res) {" +
+        "            polyfill[key] = res[key];" +
+        "        }" +
+        "        res = polyfill;" +
+        "    }" +
         "    res.env = res.env || {};" +
         "    if (!res.env.NODE_ENV) {" +
         "      res.env.NODE_ENV = (typeof __DEV__ !== 'undefined' && __DEV__) ? 'development' : 'production';" +

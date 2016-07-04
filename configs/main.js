@@ -34,6 +34,7 @@ module.exports = {
     'transform-flow-strip-types',
     'transform-object-assign',
     'transform-object-rest-spread',
+    require('../transforms/transform-react-fastgui-jsx-uuid'),
     'transform-react-display-name',
     'transform-react-jsx',
     'transform-regenerator',
